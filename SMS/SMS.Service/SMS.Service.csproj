@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Polly" Version="8.5.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SMS.APIModel\SMS.APIModel.csproj" />
+    <ProjectReference Include="..\SMS.Common\SMS.Common.csproj" />
+    <ProjectReference Include="..\SMS.Domain\SMS.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

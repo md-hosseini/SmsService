@@ -9,17 +9,16 @@ using System.Threading.Tasks;
 
 namespace SMS.Domain.Configurations
 {
-    public class UserConfigurations : IEntityTypeConfiguration<User>
+    public class LogConfigurations : IEntityTypeConfiguration<Log>
     {
-        public void Configure(EntityTypeBuilder<User> builder)
+        public void Configure(EntityTypeBuilder<Log> builder)
         {
-            builder.ToTable("Users");
+            builder.ToTable("Logs");
             builder.HasKey(r=>r.Key);
 
-            builder.HasMany(u=>u.Logs)
-                .WithOne(l=>l.User)
-                .HasForeignKey(l=>l.UserId)
-                .OnDelete(DeleteBehavior.Restrict);
+            builder.HasOne(l => l.User)
+                .WithMany(u => u.Logs)
+                .HasForeignKey(l => l.UserId);
         }
     }
 }

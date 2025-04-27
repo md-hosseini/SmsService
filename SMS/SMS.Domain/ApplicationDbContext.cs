@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using SMS.Domain.Configurations;
 using System;
 using System.CodeDom;
 using System.Collections.Generic;
@@ -20,10 +21,7 @@ namespace SMS.Domain
         {
 
             base.OnModelCreating(modelBuilder);
-
-            //var entitiesAssembly = typeof(IEntity).Assembly;
-            //modelBuilder.RegisterAllEntities<IEntity>(entitiesAssembly);
-            //modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDBContext).Assembly);
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
         }
     }
 }
