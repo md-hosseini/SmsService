@@ -32,21 +32,17 @@ builder.Services.AddScoped<ISmsService, SmsService>();
 builder.Services.AddHttpClient<SmsService>();
 
 var app = builder.Build();
-
+app.UseSwagger();
+app.UseSwaggerUI(options =>
+{
+    options.SwaggerEndpoint("/swagger/v1/swagger.json", "Your API v1");
+    options.RoutePrefix = string.Empty;
+});
 // Configure the HTTP request pipeline.
 
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
-
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI(c =>
-    {
-        c.SwaggerEndpoint("/swagger/v1/swagger.json", "SMS API v1");
-    });
-}
 
 app.MapControllers();
 app.Run();
