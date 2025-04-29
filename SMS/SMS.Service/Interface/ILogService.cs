@@ -1,4 +1,5 @@
 ﻿using SMS.APIModel.RequestModels;
+using SMS.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,6 @@ namespace SMS.Service.Interface
 {
     public interface ILogService
     {
-        Task AddAsync(CreateLogRequestModel request);
+        Task AddAsync(Log log);
     }
 }

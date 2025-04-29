@@ -27,6 +27,7 @@ namespace SMS.API.Controllers
             try
             {
                 var res = await _smsService.SendSms(request);
+                await _unitOfWork.SaveChangesAsync();
                 return Ok(new
                 {
                     Response = res
@@ -38,8 +39,10 @@ namespace SMS.API.Controllers
             }
             catch (Exception ex)
             {
+                await _unitOfWork.SaveChangesAsync();
                 return BadRequest(new { Message = "An error occurred", Details = ex.Message });
             }
+
         }
     }
 }

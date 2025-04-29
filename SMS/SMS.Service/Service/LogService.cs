@@ -17,18 +17,8 @@ namespace SMS.Service.Service
         {
             _logRepository = logRepository;
         }
-        public async Task AddAsync(CreateLogRequestModel request)
+        public async Task AddAsync(Log log)
         {
-            var log = new Log
-            {
-                Response = request.Response,
-                SentAt = DateTime.Now,
-                StatusCode = request.StatusCode,
-                Text = request.Text,
-                To = request.To,
-                UserId = request.UserId,
-            };
-
             await _logRepository.AddAsync(log);
         }
     }

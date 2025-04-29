@@ -43,6 +43,13 @@ app.UseSwaggerUI(options =>
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+await using (var scope = app.Services.CreateAsyncScope())
+{
+    var context = scope.ServiceProvider.GetService<ApplicationDbContext>();
 
+    if (context is null)
+        throw new Exception("Database Context Not Found");
+    await context.Database.MigrateAsync();
+}
 app.MapControllers();
 app.Run();
