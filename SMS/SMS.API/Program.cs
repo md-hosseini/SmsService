@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using SMS.Common;
 using SMS.Domain;
 using SMS.Domain.Entities;
 using SMS.Service.Interface;
@@ -9,7 +10,7 @@ using SMS.Service.Service;
 using SMS.Service.Service.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
-
+AppSettingFactory.Initialize(builder.Configuration);
 // Add services to the container.
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

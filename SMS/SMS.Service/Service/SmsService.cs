@@ -3,6 +3,7 @@ using Polly;
 using Polly.Retry;
 using Polly.Timeout;
 using SMS.APIModel.RequestModels;
+using SMS.Common;
 using SMS.Domain.Entities;
 using SMS.Service.Interface;
 using System;
@@ -71,11 +72,16 @@ namespace SMS.Service.Service
             _retryCount = 0;
             var user = await _userService.GetUserAsync(request.Username, request.Password);
             var log = new Log(request.To, request.Text, DateTime.Now, user.Id);
-            
 
-            string url = $"https://sms.magfa.com/api/http/sms/v1?service=enqueue" +
-                    $"&username=naft_75943&password=HDAKJV0RImICUBF6&domain=odcc" +
-                    $"&from=+98300075943&to={request.To}&text={request.Text}";
+
+            //string url = $"https://sms.magfa.com/api/http/sms/v1?service=enqueue" +
+            //        $"&username=naft_75943&password=HDAKJV0RImICUBF6&domain=odcc" +
+            //        $"&from=+98300075943&to={request.To}&text={request.Text}";
+
+            string url = $"{AppSettingFactory.AppSetting.SMS_Base_Url}service={AppSettingFactory.AppSetting.SMS_Service}" +
+                $"&username={AppSettingFactory.AppSetting.SMS_Username}&password={AppSettingFactory.AppSetting.SMS_Password}" +
+                $"&domain={AppSettingFactory.AppSetting.SMS_Domain}&from={AppSettingFactory.AppSetting.SMS_From}" +
+                $"&to={request.To}&text={request.Text}";
 
             // Call Magfa
             var response = await _retryPolicy.ExecuteAsync(() => _httpClient.GetAsync(url));
@@ -84,7 +90,7 @@ namespace SMS.Service.Service
             // Log SMS
             log.StatusCode = (int)response.StatusCode;
             log.Response = responseBody;
-            log.SentAt = DateTime.UtcNow;
+            log.SentAt = DateTime.Now;
             log.RetryCount = _retryCount;
 
             await _logService.AddAsync(log);
