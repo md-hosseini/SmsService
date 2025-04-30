@@ -22,7 +22,8 @@ namespace SMS.Common
                 SMS_Password = _configuration["SMS:Password"],
                 SMS_Domain = _configuration["SMS:Domain"],
                 SMS_From = _configuration["SMS:From"],
-                SMS_Service = _configuration["SMS:Service"]
+                SMS_Service = _configuration["SMS:Service"],
+                RetryCount = Convert.ToInt16(_configuration["RetryCount"])
             };
         }
     }
@@ -35,5 +36,6 @@ namespace SMS.Common
         public string SMS_Password { get; set; }
         public string SMS_Domain { get; set; }
         public string SMS_From { get; set; }
+        public int RetryCount { get; set; }
     }
 }

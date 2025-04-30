@@ -33,14 +33,14 @@ namespace SMS.Service.Service
 
             // Define Timeout Policy
             var timeoutPolicy = Policy
-                .TimeoutAsync<HttpResponseMessage>(TimeSpan.FromSeconds(10), TimeoutStrategy.Optimistic);
+                .TimeoutAsync<HttpResponseMessage>(TimeSpan.FromSeconds(20), TimeoutStrategy.Optimistic);
 
             // Define Retry Policy
             var retryPolicy = Policy
                             .Handle<HttpRequestException>()
                             .OrResult<HttpResponseMessage>(r => !r.IsSuccessStatusCode)
                             .WaitAndRetryAsync(
-                                retryCount: 3,
+                                retryCount: AppSettingFactory.AppSetting.RetryCount,
                                 sleepDurationProvider: _ => TimeSpan.FromSeconds(10),
                                 onRetry: (outcome, timespan, attempt, context) =>
                                 {
