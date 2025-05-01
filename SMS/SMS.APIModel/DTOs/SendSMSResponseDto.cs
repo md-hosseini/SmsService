@@ -10,5 +10,6 @@ namespace SMS.APIModel.DTOs
     {
         public string Response { get; set; }
         public int Status { get; set; }
+        public bool IsSucceeded { get; set; }
     }
 }

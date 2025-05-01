@@ -12,5 +12,7 @@ namespace SMS.APIModel.RequestModels
         public string Text { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
+        public string From { get; set; }
+        public string Domain { get; set; }
     }
 }

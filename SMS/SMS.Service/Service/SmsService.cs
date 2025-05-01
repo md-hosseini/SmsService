@@ -23,6 +23,7 @@ namespace SMS.Service.Service
         private readonly ILogService _logService;
         private readonly IAsyncPolicy<HttpResponseMessage> _retryPolicy;
         private int _retryCount;
+        private readonly List<string> _errorCodes = AppSettingFactory.AppSetting.ErrorCodes; 
         public SmsService(HttpClient httpClient, IUserService userService, ILogService logService)
         {
             _httpClient = httpClient;
@@ -80,8 +81,8 @@ namespace SMS.Service.Service
             //        $"&from=+98300075943&to={request.To}&text={request.Text}";
 
             string url = $"{AppSettingFactory.AppSetting.SMS_Base_Url}service={AppSettingFactory.AppSetting.SMS_Service}" +
-                $"&username={AppSettingFactory.AppSetting.SMS_Username}&password={AppSettingFactory.AppSetting.SMS_Password}" +
-                $"&domain={AppSettingFactory.AppSetting.SMS_Domain}&from={AppSettingFactory.AppSetting.SMS_From}" +
+                $"&username={request.Username}&password={request.Password}" +
+                $"&domain={request.Domain}&from={request.From}" +
                 $"&to={request.To}&text={request.Text}";
 
             // Call Magfa
@@ -93,13 +94,15 @@ namespace SMS.Service.Service
             log.Response = responseBody;
             log.SentAt = DateTime.Now;
             log.RetryCount = _retryCount;
+            
 
             await _logService.AddAsync(log);
 
             return new SendSMSResponseDto
             {
                 Response = responseBody,
-                Status = log.StatusCode.Value
+                Status = log.StatusCode.Value,
+                IsSucceeded= (!_errorCodes.Any(r=>r == responseBody)) ? true : false
             };
         }
     }
