@@ -31,7 +31,15 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<ISmsService, SmsService>();
 
 builder.Services.AddHttpClient<SmsService>();
-
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("Cors", builder =>
+    {
+        builder.AllowAnyOrigin()
+               .AllowAnyMethod()
+               .AllowAnyHeader();
+    });
+});
 var app = builder.Build();
 app.UseSwagger();
 app.UseSwaggerUI(options =>
@@ -42,7 +50,7 @@ app.UseSwaggerUI(options =>
 // Configure the HTTP request pipeline.
 
 app.UseHttpsRedirection();
-
+app.UseCors("Cors");
 app.UseAuthorization();
 await using (var scope = app.Services.CreateAsyncScope())
 {
