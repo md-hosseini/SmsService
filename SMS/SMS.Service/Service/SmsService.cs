@@ -29,7 +29,7 @@ namespace SMS.Service.Service
             _logService = logService;
 
             // --- SET A BASIC CLIENT TIMEOUT (safe default) ---
-            _httpClient.Timeout = TimeSpan.FromSeconds(30);
+            _httpClient.Timeout = Timeout.InfiniteTimeSpan;
 
             // Define Timeout Policy
             var timeoutPolicy = Policy
