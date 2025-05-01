@@ -1,4 +1,5 @@
-﻿using SMS.APIModel.RequestModels;
+﻿using SMS.APIModel.DTOs;
+using SMS.APIModel.RequestModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,6 @@ namespace SMS.Service.Interface
 {
     public interface ISmsService
     {
-        Task<string> SendSms(SendSmsRequestModel request);
+        Task<SendSMSResponseDto> SendSms(SendSmsRequestModel request);
     }
 }

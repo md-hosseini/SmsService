@@ -2,6 +2,7 @@
 using Polly;
 using Polly.Retry;
 using Polly.Timeout;
+using SMS.APIModel.DTOs;
 using SMS.APIModel.RequestModels;
 using SMS.Common;
 using SMS.Domain.Entities;
@@ -67,7 +68,7 @@ namespace SMS.Service.Service
             _retryPolicy = fallbackPolicy.WrapAsync(retryPolicy.WrapAsync(timeoutPolicy));
         }
 
-        public async Task<string> SendSms(SendSmsRequestModel request)
+        public async Task<SendSMSResponseDto> SendSms(SendSmsRequestModel request)
         {
             _retryCount = 0;
             var user = await _userService.GetUserAsync(request.Username, request.Password);
@@ -95,7 +96,11 @@ namespace SMS.Service.Service
 
             await _logService.AddAsync(log);
 
-            return responseBody;
+            return new SendSMSResponseDto
+            {
+                Response = responseBody,
+                Status = log.StatusCode.Value
+            };
         }
     }
 }
