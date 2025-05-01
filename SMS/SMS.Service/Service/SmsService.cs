@@ -72,7 +72,7 @@ namespace SMS.Service.Service
         public async Task<SendSMSResponseDto> SendSms(SendSmsRequestModel request)
         {
             _retryCount = 0;
-            var user = await _userService.GetUserAsync(request.Username, request.Password);
+            var user = await _userService.GetUserAsync(request.ApiUsername, request.APIPassword);
             var log = new Log(request.To, request.Text, DateTime.Now, user.Id);
 
 
