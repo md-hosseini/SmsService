@@ -80,9 +80,13 @@ namespace SMS.Service.Service
             //        $"&username=naft_75943&password=HDAKJV0RImICUBF6&domain=odcc" +
             //        $"&from=+98300075943&to={request.To}&text={request.Text}";
 
+            string username = (request.UseDefault) ? AppSettingFactory.AppSetting.DefaultUserName : request.Username;
+            string password = (request.UseDefault) ? AppSettingFactory.AppSetting.DefaultPassword : request.Password;
+            string from = (request.UseDefault) ? AppSettingFactory.AppSetting.DefaultFrom : request.From;
+            string domain = (request.UseDefault) ? AppSettingFactory.AppSetting.DefaultDomain : request.Domain;
             string url = $"{AppSettingFactory.AppSetting.SMS_Base_Url}service={AppSettingFactory.AppSetting.SMS_Service}" +
-                $"&username={request.Username}&password={request.Password}" +
-                $"&domain={request.Domain}&from={request.From}" +
+                $"&username={username}&password={password}" +
+                $"&domain={domain}&from={from}" +
                 $"&to={request.To}&text={request.Text}";
 
             // Call Magfa

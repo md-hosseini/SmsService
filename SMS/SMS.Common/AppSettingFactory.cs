@@ -24,7 +24,11 @@ namespace SMS.Common
         _configuration["SMS:ErrorCodes"]
         ?.Split(',', StringSplitOptions.RemoveEmptyEntries)
         .Select(code => code.Trim())
-        .ToList() ?? new List<string>()
+        .ToList() ?? new List<string>(),
+                DefaultDomain = _configuration["SMS:DefaultDomain"],
+                DefaultFrom = _configuration["SMS:DefaultFrom"],
+                DefaultPassword = _configuration["SMS:DefaultPassword"],
+                DefaultUserName = _configuration["SMS:DefaultUserName"],
             };
         }
     }
@@ -35,5 +39,9 @@ namespace SMS.Common
         public string SMS_Base_Url { get; set; }
         public int RetryCount { get; set; }
         public List<string> ErrorCodes { get; set; } = new List<string>();
+        public string DefaultUserName { get; set; }
+        public string DefaultPassword { get; set; }
+        public string DefaultFrom { get; set; }
+        public string DefaultDomain { get; set; }
     }
 }

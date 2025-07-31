@@ -16,5 +16,6 @@ namespace SMS.APIModel.RequestModels
         public string Domain { get; set; }
         public string ApiUsername { get; set; }
         public string APIPassword { get; set; }
+        public bool UseDefault {  get; set; } = false;
     }
 }
